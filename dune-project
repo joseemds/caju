@@ -19,7 +19,7 @@
  (name caju)
  (synopsis "A short synopsis")
  (description "A longer description")
- (depends ocaml dune)
+ (depends ocaml dune (menhir :test) fmt)
  (tags
   (topics "to describe" your project)))
 

@@ -1,2 +1,3 @@
 (library
- (name caju))
+ (name caju)
+ (libraries fmt))
