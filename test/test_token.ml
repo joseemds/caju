@@ -1,6 +1,6 @@
-open Caju.Lexer
+open Caju.Token
 
-let token = Alcotest.testable pp_token eq_token
+let token = Alcotest.testable pp eq
 
 let test_parse_int () =
   let buffer = String.to_seq "123" in
