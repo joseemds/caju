@@ -17,9 +17,12 @@ type t =
   | And
   | True
   | False
+  | EOF
+
+type state = t * char Seq.t
 
 val pp : t Fmt.t
 val eq : t -> t -> bool
-val parse_int : char Seq.t -> t
-val parse_identifier : char Seq.t -> t
+val parse_int : char Seq.t -> state
+val parse_identifier : char Seq.t -> state
 val choice : t option list -> t option

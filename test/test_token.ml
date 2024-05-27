@@ -5,17 +5,17 @@ let token = Alcotest.testable pp eq
 
 let test_parse_int () =
   let buffer = String.to_seq "123" in
-  let actual = parse_int buffer in
+  let actual, _= parse_int buffer in
   Alcotest.(check token) "Buffer with digits only" (Digit 123) actual
 
 let test_parse_complex_buffer () =
   let buffer = String.to_seq "12 feijao com arroz" in
-  let actual = parse_int buffer in
+  let actual, _ = parse_int buffer in
   Alcotest.(check token) "Buffer starting with numbers" (Digit 12) actual
 
 let test_parse_int_stop_on_whitespace () =
   let buffer = String.to_seq "1 2 feijao com arroz" in
-  let actual = parse_int buffer in
+  let actual, _ = parse_int buffer in
   Alcotest.(check token) "Stop on whitespace" (Digit 1) actual
 
 (* let test_parse_int_noop_on_fail () = *)
@@ -25,7 +25,7 @@ let test_parse_int_stop_on_whitespace () =
 
 let () =
   let open Alcotest in
-  Alcotest.run "Lexer tests"
+  Alcotest.run "Token tests"
     [
       ( "lex digits",
         [

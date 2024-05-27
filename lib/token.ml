@@ -1,5 +1,5 @@
 type t =
-  | Digit of int
+  | Digit of t
   | Ident of string
   | LeftChevron
   | RightChevron
@@ -17,6 +17,9 @@ type t =
   | And
   | True
   | False
+  | EOF
+
+type state = t * char Seq.t
 
 let eq x y =
   match (x, y) with
@@ -44,7 +47,8 @@ let pp ppf =
     | Or -> pf ppf "or"
     | And -> pf ppf "and"
     | True -> pf ppf "true"
-    | False -> pf ppf "false")
+    | False -> pf ppf "false"
+    | EOF -> pf ppf "EOF")
 
 let keyword s =
   let module KM = Map.Make (String) in
@@ -67,12 +71,17 @@ let is_digit = function '0' .. '9' -> true | _ -> false
 let is_alphanumeric c = is_alpha c || is_digit c
 
 let parse_identifier buf =
-  let str = String.of_seq @@ Seq.take_while is_alphanumeric buf in
-  match keyword str with Some kw -> kw | None -> Ident str
+  let seq = Seq.take_while is_alphanumeric buf in
+  let str = String.of_seq seq in
+  match keyword str with 
+  |Some kw -> kw, seq 
+  |None -> Ident str, seq
 
 let parse_int buf =
   let ds = Seq.take_while is_digit buf in
-  digit @@ int_of_string @@ String.of_seq ds
+  let digit = digit @@ int_of_string @@ String.of_seq ds in
+  digit, ds
+
 
 let or_ f g = match f with Some _ -> f | None -> g
 let choice l = List.fold_left or_ None l

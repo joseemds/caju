@@ -1,3 +1,9 @@
 (test
  (name test_token)
+ (modules test_token)
+ (libraries caju alcotest))
+
+(test
+ (name test_lexer)
+ (modules test_lexer)
  (libraries caju alcotest))
