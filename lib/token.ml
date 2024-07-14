@@ -1,5 +1,5 @@
 type t =
-  | Digit of t
+  | Digit of int
   | Ident of string
   | LeftChevron
   | RightChevron

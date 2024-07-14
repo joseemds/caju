@@ -37,7 +37,6 @@ let () =
     [
       ( "tokenize",
         [
-          test_case "tokenize consume  all tokens" `Quick
-            test_tokenize_all_tokens;
+          test_case "tokenize consume all tokens" `Quick test_tokenize_all_tokens;
         ] );
     ]
